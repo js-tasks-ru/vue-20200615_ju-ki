@@ -48,26 +48,23 @@ export const app = new Vue({
 
   computed: {
     processedMeetup() {
-      return Object.assign(this.meetup, {
-        localDate: new Date(this.meetup.date).toLocaleString(navigator.language, {
+      return Object.assign({}, this.meetup, {
+        date: new Date(this.meetup.date).toLocaleString(navigator.language, {
           year: 'numeric',
           month: 'long',
           day: 'numeric'
         }),
         meetupImageUrl: this.meetupImageUrl
-      })
+      });
     }
   },
 
   methods: {
-    // Получение данных с API предпочтительнее оформить отдельным методом,
-    // а не писать прямо в mounted()
     fetchMeetup(meetupId) {
       return fetch(`${this.API_URL}/meetups/${meetupId}`).then( response => response.json())
     },
 
     fetchMeetupImage(imageId) {
-      // https://course-vue.javascript.ru/api/images/3
       return fetch (`${this.API_URL}/images/${imageId}`).then(res => res.url)
     }
   },
