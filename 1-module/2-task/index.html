@@ -33,7 +33,8 @@
 
               <div class="meetup-agenda__item-col">
                 <h5 class="meetup-agenda__title" v-if="agenda.title">{{agenda.title}}</h5>
-                <p><span v-if="agenda.speaker">{{ agenda.speaker }}</span><span v-if="agenda.speaker" class="meetup-agenda__dot"></span><span class="meetup-agenda__lang" v-if="agenda.language">{{agenda.language}}</span></p>
+                <h5 class="meetup-agenda__title" v-else></h5>
+                <p v-if="agenda.type === 'talk' " ><span v-if="agenda.speaker">{{ agenda.speaker }}</span><span v-if="agenda.speaker" class="meetup-agenda__dot"></span><span class="meetup-agenda__lang" v-if="agenda.language">{{agenda.language}}</span></p>
                 <p v-if="agenda.description">{{agenda.description}}</p>
               </div>
 

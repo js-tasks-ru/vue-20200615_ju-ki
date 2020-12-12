@@ -3,16 +3,7 @@ import Vue from '/vendor/vue.esm.browser.js';
 /**
  * Словарь заголовков по умолчанию для всех типов элементов программы
  */
-const agendaItemTitles = {
-  registration: 'Регистрация',
-  opening: 'Открытие',
-  break: 'Перерыв',
-  coffee: 'Coffee Break',
-  closing: 'Закрытие',
-  afterparty: 'Afterparty',
-  talk: 'Доклад',
-  other: 'Другое',
-};
+
 
 /**
  * Словарь иконок для для всех типов элементов программы.
@@ -37,7 +28,18 @@ export const app = new Vue({
       meetup: Object,
       API_URL: 'https://course-vue.javascript.ru/api',
       MEETUP_ID: 3,
-      meetupImageUrl: String
+      meetupImageUrl: String,
+
+      agendaItemTitles: {
+        registration: 'Регистрация',
+        opening: 'Открытие',
+        break: 'Перерыв',
+        coffee: 'Coffee Break',
+        closing: 'Закрытие',
+        afterparty: 'Afterparty',
+        talk: 'Доклад',
+        other: 'Другое',
+      }
     }
   },
 
@@ -47,6 +49,23 @@ export const app = new Vue({
   },
 
   computed: {
+
+    processedDefaultAgendaTitle(type) {
+      let defaultAgendaTitle = ''
+      for (let defaultTitle in this.agendaItemTitles) {
+        if (type === this.agendaItemTitles[defaultTitle]) {
+          console.log(this.agendaItemTitles[defaultTitle])
+        }
+
+      }
+
+      return defaultAgendaTitle;
+    },
+
+    processedDefaultAgendaIcon() {
+      return '';
+    },
+
     processedMeetup() {
       return Object.assign({}, this.meetup, {
         date: new Date(this.meetup.date).toLocaleString(navigator.language, {
@@ -54,9 +73,28 @@ export const app = new Vue({
           month: 'long',
           day: 'numeric'
         }),
-        meetupImageUrl: this.meetupImageUrl
+        meetupImageUrl: this.meetupImageUrl,
+        agenda: this.meetup.agenda ? this.meetup.agenda.map(agenda => ({
+            ...agenda,
+            defaultTitle: this.processedDefaultAgendaTitle(agenda.type),
+            defaultIcon: this.processedDefaultAgendaIcon,
+          })
+        ) : undefined
       });
-    }
+    },
+
+
+
+    // defaultAgendaItemTitle: function (type) {
+    //   let defaultTitle = '';
+    //   for (let key in this.agendaItemTitles.keys) {
+    //     console.log(key)
+    //     if (key === type) {
+    //       defaultTitle = this.agendaItemTitles.key
+    //     }
+    //   }
+    //   return defaultTitle;
+    // }
   },
 
   methods: {
