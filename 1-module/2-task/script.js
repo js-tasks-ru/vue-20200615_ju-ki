@@ -1,20 +1,5 @@
 import Vue from '/vendor/vue.esm.browser.js';
 
-/** URL адрес API */
-const API_URL = 'https://course-vue.javascript.ru/api';
-
-/** ID митапа для примера; используйте его при получении митапа */
-const MEETUP_ID = 6;
-
-/**
- * Возвращает ссылку на изображение митапа для митапа
- * @param meetup - объект с описанием митапа (и параметром meetupId)
- * @return {string} - ссылка на изображение митапа
- */
-function getMeetupCoverLink(meetup) {
-  return `${API_URL}/images/${meetup.imageId}`;
-}
-
 /**
  * Словарь заголовков по умолчанию для всех типов элементов программы
  */
@@ -47,20 +32,44 @@ const agendaItemIcons = {
 export const app = new Vue({
   el: '#app',
 
-  data: {
-    //
+  data() {
+    return {
+      meetup: Object,
+      API_URL: 'https://course-vue.javascript.ru/api',
+      MEETUP_ID: 3,
+      meetupImageUrl: String
+    }
   },
 
-  mounted() {
-    // Требуется получить данные митапа с API
+  async mounted() {
+    this.meetup = await this.fetchMeetup(this.MEETUP_ID);
+    this.meetupImageUrl = await this.fetchMeetupImage(this.MEETUP_ID);
   },
 
   computed: {
-    //
+    processedMeetup() {
+      return Object.assign(this.meetup, {
+        localDate: new Date(this.meetup.date).toLocaleString(navigator.language, {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        }),
+        meetupImageUrl: this.meetupImageUrl
+      })
+    }
   },
 
   methods: {
     // Получение данных с API предпочтительнее оформить отдельным методом,
     // а не писать прямо в mounted()
+    fetchMeetup(meetupId) {
+      return fetch(`${this.API_URL}/meetups/${meetupId}`).then( response => response.json())
+    },
+
+    fetchMeetupImage(imageId) {
+      // https://course-vue.javascript.ru/api/images/3
+      return fetch (`${this.API_URL}/images/${imageId}`).then(res => res.url)
+    }
   },
 });
+
