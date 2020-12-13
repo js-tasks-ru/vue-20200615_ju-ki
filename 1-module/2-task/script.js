@@ -1,25 +1,5 @@
 import Vue from '/vendor/vue.esm.browser.js';
 
-/**
- * Словарь заголовков по умолчанию для всех типов элементов программы
- */
-
-
-/**
- * Словарь иконок для для всех типов элементов программы.
- * Соответствует имени иконок в директории /assets/icons
- */
-const agendaItemIcons = {
-  registration: 'key',
-  opening: 'cal-sm',
-  talk: 'tv',
-  break: 'clock',
-  coffee: 'coffee',
-  closing: 'key',
-  afterparty: 'cal-sm',
-  other: 'cal-sm',
-};
-
 export const app = new Vue({
   el: '#app',
 
@@ -27,7 +7,7 @@ export const app = new Vue({
     return {
       meetup: Object,
       API_URL: 'https://course-vue.javascript.ru/api',
-      MEETUP_ID: 3,
+      MEETUP_ID: 5,
       meetupImageUrl: String,
 
       agendaItemTitles: {
@@ -39,6 +19,17 @@ export const app = new Vue({
         afterparty: 'Afterparty',
         talk: 'Доклад',
         other: 'Другое',
+      },
+
+      agendaItemIcons: {
+        registration: 'key',
+        opening: 'cal-sm',
+        talk: 'tv',
+        break: 'clock',
+        coffee: 'coffee',
+        closing: 'key',
+        afterparty: 'cal-sm',
+        other: 'cal-sm',
       }
     }
   },
@@ -49,23 +40,6 @@ export const app = new Vue({
   },
 
   computed: {
-
-    processedDefaultAgendaTitle(type) {
-      let defaultAgendaTitle = ''
-      for (let defaultTitle in this.agendaItemTitles) {
-        if (type === this.agendaItemTitles[defaultTitle]) {
-          console.log(this.agendaItemTitles[defaultTitle])
-        }
-
-      }
-
-      return defaultAgendaTitle;
-    },
-
-    processedDefaultAgendaIcon() {
-      return '';
-    },
-
     processedMeetup() {
       return Object.assign({}, this.meetup, {
         date: new Date(this.meetup.date).toLocaleString(navigator.language, {
@@ -76,25 +50,12 @@ export const app = new Vue({
         meetupImageUrl: this.meetupImageUrl,
         agenda: this.meetup.agenda ? this.meetup.agenda.map(agenda => ({
             ...agenda,
-            defaultTitle: this.processedDefaultAgendaTitle(agenda.type),
-            defaultIcon: this.processedDefaultAgendaIcon,
+          defaultTitle: agenda.title == null ? this.processDefaultAgendaTitle(agenda.type) : agenda.title,
+          defaultIcon: this.processedDefaultAgendaIcon(agenda.type),
           })
-        ) : undefined
+        ) : null
       });
     },
-
-
-
-    // defaultAgendaItemTitle: function (type) {
-    //   let defaultTitle = '';
-    //   for (let key in this.agendaItemTitles.keys) {
-    //     console.log(key)
-    //     if (key === type) {
-    //       defaultTitle = this.agendaItemTitles.key
-    //     }
-    //   }
-    //   return defaultTitle;
-    // }
   },
 
   methods: {
@@ -104,7 +65,29 @@ export const app = new Vue({
 
     fetchMeetupImage(imageId) {
       return fetch (`${this.API_URL}/images/${imageId}`).then(res => res.url)
-    }
+    },
+
+    processDefaultAgendaTitle (type) {
+      let defaultAgendaTitle = ''
+      for (let key in this.agendaItemTitles) {
+        if (type === key) {
+          defaultAgendaTitle = this.agendaItemTitles[key];
+        }
+      }
+      return defaultAgendaTitle;
+    },
+
+    processedDefaultAgendaIcon(type) {
+      let iconName = '';
+      for (let key in this.agendaItemIcons) {
+        if (type === key) {
+          iconName = this.agendaItemIcons[key];
+        }
+      }
+      return iconName;
+    },
+
+
   },
 });
 
