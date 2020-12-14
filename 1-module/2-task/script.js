@@ -5,10 +5,10 @@ export const app = new Vue({
 
   data() {
     return {
-      meetup: Object,
+      meetup: null,
       API_URL: 'https://course-vue.javascript.ru/api',
       MEETUP_ID: 5,
-      meetupImageUrl: String,
+      meetupImageUrl: '',
 
       agendaItemTitles: {
         registration: 'Регистрация',
@@ -41,20 +41,23 @@ export const app = new Vue({
 
   computed: {
     processedMeetup() {
-      return Object.assign({}, this.meetup, {
-        date: new Date(this.meetup.date).toLocaleString(navigator.language, {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric'
-        }),
-        meetupImageUrl: this.meetupImageUrl,
-        agenda: this.meetup.agenda ? this.meetup.agenda.map(agenda => ({
-            ...agenda,
-          defaultTitle: agenda.title == null ? this.processDefaultAgendaTitle(agenda.type) : agenda.title,
-          defaultIcon: this.processedDefaultAgendaIcon(agenda.type),
-          })
-        ) : null
-      });
+      if (this.meetup) {
+        return Object.assign({}, this.meetup, {
+          date: new Date(this.meetup.date).toLocaleString(navigator.language, {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          }),
+          meetupImageUrl: this.meetupImageUrl,
+          agenda: this.meetup.agenda ? this.meetup.agenda.map(agenda => ({
+              ...agenda,
+              defaultTitle: this.agendaItemTitles[agenda.type],
+              defaultIcon: this.agendaItemIcons[agenda.type],
+            })
+          ) : null
+        });
+      }
+      return null
     },
   },
 
@@ -65,28 +68,7 @@ export const app = new Vue({
 
     fetchMeetupImage(imageId) {
       return fetch (`${this.API_URL}/images/${imageId}`).then(res => res.url)
-    },
-
-    processDefaultAgendaTitle (type) {
-      let defaultAgendaTitle = ''
-      for (let key in this.agendaItemTitles) {
-        if (type === key) {
-          defaultAgendaTitle = this.agendaItemTitles[key];
-        }
-      }
-      return defaultAgendaTitle;
-    },
-
-    processedDefaultAgendaIcon(type) {
-      let iconName = '';
-      for (let key in this.agendaItemIcons) {
-        if (type === key) {
-          iconName = this.agendaItemIcons[key];
-        }
-      }
-      return iconName;
-    },
-
+    }
 
   },
 });

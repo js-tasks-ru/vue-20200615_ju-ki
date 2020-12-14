@@ -10,7 +10,7 @@
 </head>
 <body>
 <div id="app">
-  <div>
+  <div v-if="processedMeetup">
     <div class="meetup-cover"
          :style="processedMeetup.meetupImageUrl ? `--bg-url: url('${processedMeetup.meetupImageUrl}')` : ''"
     >
