@@ -8,8 +8,8 @@ const app = new Vue({
   },
 
   methods: {
-    onclick($event) {
-      this.buttonNumber = ++ $event.target.value;
+    onclick() {
+      ++this.buttonNumber;
     }
   }
 });
