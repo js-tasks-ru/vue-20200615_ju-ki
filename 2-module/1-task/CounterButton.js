@@ -1,30 +1,24 @@
 export const CounterButton = {
-  // Шаблон потребуется отредактировать
-  template: '<button @click="onclick()" type="button">{{count}}</button>',
+
+  template: '<button @click="increment" type="button">{{count}}</button>',
 
   name: 'CounterButton',
 
   props: {
-    count: Number
-  },
-
-  data() {
-    return {
-      localCount: 0
+    count: {
+      default: 0,
+      type: Number
     }
   },
 
-  // mounted() {
-  //   this.localCount = this.count
-  //   if (this.count === undefined) {
-  //     this.localCount = 0;
-  //   }
-  // },
+  model: {
+    prop: 'count',
+    event: 'increment'
+  },
 
   methods: {
-    onclick() {
-      this.localCount = this.count + 1;
-      this.$emit('increment', this.localCount);
+    increment() {
+      this.$emit('increment', this.count + 1);
     }
   }
 
