@@ -1,66 +1,75 @@
 import Vue from '/vendor/vue.esm.browser.js';
 
-/** URL адрес API */
-const API_URL = 'https://course-vue.javascript.ru/api';
-
-/** ID митапа для примера; используйте его при получении митапа */
-const MEETUP_ID = 6;
-
-/**
- * Возвращает ссылку на изображение митапа для митапа
- * @param meetup - объект с описанием митапа (и параметром meetupId)
- * @return {string} - ссылка на изображение митапа
- */
-function getMeetupCoverLink(meetup) {
-  return `${API_URL}/images/${meetup.imageId}`;
-}
-
-/**
- * Словарь заголовков по умолчанию для всех типов элементов программы
- */
-const agendaItemTitles = {
-  registration: 'Регистрация',
-  opening: 'Открытие',
-  break: 'Перерыв',
-  coffee: 'Coffee Break',
-  closing: 'Закрытие',
-  afterparty: 'Afterparty',
-  talk: 'Доклад',
-  other: 'Другое',
-};
-
-/**
- * Словарь иконок для для всех типов элементов программы.
- * Соответствует имени иконок в директории /assets/icons
- */
-const agendaItemIcons = {
-  registration: 'key',
-  opening: 'cal-sm',
-  talk: 'tv',
-  break: 'clock',
-  coffee: 'coffee',
-  closing: 'key',
-  afterparty: 'cal-sm',
-  other: 'cal-sm',
-};
-
 export const app = new Vue({
   el: '#app',
 
-  data: {
-    //
+  data() {
+    return {
+      meetup: null,
+      API_URL: 'https://course-vue.javascript.ru/api',
+      MEETUP_ID: 5,
+      meetupImageUrl: '',
+
+      agendaItemTitles: {
+        registration: 'Регистрация',
+        opening: 'Открытие',
+        break: 'Перерыв',
+        coffee: 'Coffee Break',
+        closing: 'Закрытие',
+        afterparty: 'Afterparty',
+        talk: 'Доклад',
+        other: 'Другое',
+      },
+
+      agendaItemIcons: {
+        registration: 'key',
+        opening: 'cal-sm',
+        talk: 'tv',
+        break: 'clock',
+        coffee: 'coffee',
+        closing: 'key',
+        afterparty: 'cal-sm',
+        other: 'cal-sm',
+      }
+    }
   },
 
-  mounted() {
-    // Требуется получить данные митапа с API
+  async mounted() {
+    this.meetup = await this.fetchMeetup(this.MEETUP_ID);
+    this.meetupImageUrl = await this.fetchMeetupImage(this.MEETUP_ID);
   },
 
   computed: {
-    //
+    processedMeetup() {
+      if (this.meetup) {
+        return Object.assign({}, this.meetup, {
+          date: new Date(this.meetup.date).toLocaleString(navigator.language, {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          }),
+          meetupImageUrl: this.meetupImageUrl,
+          agenda: this.meetup.agenda ? this.meetup.agenda.map(agenda => ({
+              ...agenda,
+              defaultTitle: this.agendaItemTitles[agenda.type],
+              defaultIcon: this.agendaItemIcons[agenda.type],
+            })
+          ) : null
+        });
+      }
+      return null
+    },
   },
 
   methods: {
-    // Получение данных с API предпочтительнее оформить отдельным методом,
-    // а не писать прямо в mounted()
+    fetchMeetup(meetupId) {
+      return fetch(`${this.API_URL}/meetups/${meetupId}`).then( response => response.json())
+    },
+
+    fetchMeetupImage(imageId) {
+      return fetch (`${this.API_URL}/images/${imageId}`).then(res => res.url)
+    }
+
   },
 });
+
