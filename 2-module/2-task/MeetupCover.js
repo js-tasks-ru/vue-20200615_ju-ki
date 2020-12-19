@@ -3,7 +3,7 @@ import { getMeetupCoverLink } from './data.js';
 export const MeetupCover = {
 
   template: `<div
-    style="\`\${processedMeetup.meetupImageUrl}\` ? \`--bg-url: url('\${processedMeetup.imgUrl}')\` : ''"
+    :style="\`\${processedMeetup.meetupImageUrl}\` ? \`--bg-url: url('\${processedMeetup.imgUrl}')\` : ''"
     class="meetup-cover"
   >
   <h1 class="meetup-cover__title">{{processedMeetup.title}}</h1>
