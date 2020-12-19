@@ -8,7 +8,7 @@ export const MeetupView = {
   name: 'MeetupView',
 
   template: `
-    <div v-if="meetup">
+    <div>
       <!-- meetup-cover -->
       <meetup-cover :link="imgUrl" :title="meetup.title"></meetup-cover>
       <div class="container">
