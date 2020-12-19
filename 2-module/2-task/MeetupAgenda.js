@@ -5,11 +5,11 @@ export const MeetupAgenda = {
 
   template: `
     <div class="meetup-agenda">
-        <meetup-agenda-item
-          v-for="agenda in meetup.agenda"
-          :key="meetup.agenda.id"
-          :agenda="agenda"
-        ></meetup-agenda-item>
+      <meetup-agenda-item
+        v-for="agendaItem in agenda"
+        :key="agenda.id"
+        :agendaItem="agendaItem"
+      ></meetup-agenda-item>
     </div>`,
 
 
@@ -18,8 +18,8 @@ export const MeetupAgenda = {
   },
 
   props: {
-    meetup: {
-      type: Object,
+    agenda: {
+      type: Array,
       required: true,
     }
   },
