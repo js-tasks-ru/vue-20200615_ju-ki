@@ -1,11 +1,47 @@
-// import { getMeetupCoverLink } from './data.js';
+import { getMeetupCoverLink } from './data.js';
 
 export const MeetupCover = {
-  template: `<div class="meetup-cover" style="--bg-url: url('https://course-vue.javascript.ru/api/images/2')">
-        <h1 class="meetup-cover__title">Название митапа</h1>
-    </div>`,
+
+  template: `<div
+    style="\`\${processedMeetup.meetupImageUrl}\` ? \`--bg-url: url('\${processedMeetup.imgUrl}')\` : ''"
+    class="meetup-cover"
+  >
+  <h1 class="meetup-cover__title">{{processedMeetup.title}}</h1>
+  </div>`,
+
+  name: 'MeetupCover',
 
   // Пропсы
+  props: {
+    meetup: {
+      type: Object,
+      required: true,
+    }
+  },
 
-  // Возможно, тут потребуется computed
+  data() {
+    return {
+      imgUrl: ''
+    }
+  },
+
+  async mounted() {
+    this.imgUrl = this.getCover(this.meetup)
+  },
+
+  computed: {
+    processedMeetup() {
+      if (this.meetup) {
+        return Object.assign({}, this.meetup, {
+          imgUrl: this.imgUrl
+        })
+      }
+    }
+  },
+
+  methods: {
+    getCover(meetup) {
+      return getMeetupCoverLink(meetup)
+    }
+  }
 };
