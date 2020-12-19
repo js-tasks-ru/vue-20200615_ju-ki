@@ -5,14 +5,11 @@ export const MeetupAgenda = {
 
   template: `
     <div class="meetup-agenda">
-      <div class="meetup-agenda__item"
-           v-for="agenda in meetup.agenda"
-           :key="meetup.agenda.id"
-      >
         <meetup-agenda-item
+          v-for="agenda in meetup.agenda"
+          :key="meetup.agenda.id"
           :agenda="agenda"
         ></meetup-agenda-item>
-      </div>
     </div>`,
 
 

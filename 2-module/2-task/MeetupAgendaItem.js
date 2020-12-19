@@ -3,7 +3,7 @@ import { agendaItemTitles, agendaItemIcons } from './data.js';
 export const MeetupAgendaItem = {
   name: 'MeetupAgendaItem',
 
-  template: `<div class="meetup-agenda__item">
+  template: `<div class="meetup-agenda__item" v-if="agenda">
       <div class="meetup-agenda__item-col">
         <img class="icon" alt="icon" v-bind:src="\`/assets/icons/icon-\${processedAgenda.defaultIcon}.svg\`" />
       </div>
