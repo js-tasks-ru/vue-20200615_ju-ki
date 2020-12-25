@@ -36,18 +36,17 @@ export default {
         error: 'alert-circle'
         };
 
-      this.toast = {
+      let toast = {
         message,
         class: 'toast_'+className,
         icon: icons[className],
         id: this.generateId(className)
       };
 
-      this.toasts.push(this.toast);
+      this.toasts.push(toast);
 
       setTimeout(() => {
-        let indexToDelete  = this.toasts.findIndex(toast => toast.id === this.toast.id)
-        this.toasts.splice(indexToDelete, 1)
+        this.toasts.splice(this.toasts.indexOf(toast), 1)
       }, 5000);
 
     },
