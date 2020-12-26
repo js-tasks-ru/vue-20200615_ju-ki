@@ -22,6 +22,7 @@
           <input class="form-control" placeholder="inline" />
         </div>
       </form-group>
+
       <form-group inline>
         <div class="input-group">
           <input class="form-control" placeholder="inline" />
