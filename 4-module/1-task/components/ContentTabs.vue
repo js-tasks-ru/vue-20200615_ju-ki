@@ -1,11 +1,10 @@
 <template>
-  <div class="content-tabs">
-    <div class="content-tabs__nav">
-      <a href="#" class="content-tabs__tab">Page A</a>
-      <a href="#" class="content-tabs__tab">Page B</a>
+  <div class="content-tabs" v-if="tabs">
+    <div class="content-tabs__nav"  v-for="tab in tabs" :key="genId()">
+      <router-link active-class="content-tabs__tab_active" :to="tab.to" class="content-tabs__tab">{{tab.text}}</router-link>
     </div>
     <div class="content-tabs__content">
-      Content
+      <slot></slot>
     </div>
   </div>
 </template>
@@ -13,6 +12,18 @@
 <script>
 export default {
   name: 'ContentTabs',
+  props: {
+    tabs: {
+      type: Array,
+      required: true
+    }
+  },
+
+  methods: {
+    genId() {
+      return Math.random().toFixed(3)
+    }
+  }
 };
 </script>
 
