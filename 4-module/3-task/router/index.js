@@ -18,5 +18,13 @@ export const router = new VueRouter({
       path: '/page-b',
       component: PageB,
     },
+    {
+      path: '/page-unknown',
+      component: NotFoundPage,
+    },
+    {
+      path: '*',
+      redirect: '/page-unknown'
+    },
   ],
 });
