@@ -15,7 +15,6 @@ export default {
   name: 'AuthLayout',
   props: {
     title: {
-      required: true,
       type: String
     }
   }
