@@ -63,11 +63,7 @@ export default {
           view: (this.view === 'list') ? undefined : this.view,
           search: (this.search === '') ? undefined : this.search,
         }
-      }).catch(err => {
-        if (err.name !== 'NavigationDuplicated') {
-          throw err;
-        }
-      });
+      }).catch(() => {});
     }
   }
 
