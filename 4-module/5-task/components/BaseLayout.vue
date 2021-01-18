@@ -4,7 +4,7 @@
 
     <main class="main">
       <div class="page page_onboarding">
-        <router-view/>
+        <slot/>
       </div>
     </main>
     <the-footer/>
