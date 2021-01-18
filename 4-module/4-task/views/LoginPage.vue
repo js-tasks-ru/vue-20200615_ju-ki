@@ -3,13 +3,13 @@
     <div class="form-group">
       <label class="form-label">Email</label>
       <div class="input-group">
-        <input type="email" @input="setEmail($event)" placeholder="demo@email" class="form-control" />
+        <input type="email" v-model="email" placeholder="demo@email" class="form-control" />
       </div>
     </div>
     <div class="form-group">
       <label class="form-label">Пароль</label>
       <div class="input-group">
-        <input type="password" @input="setPassword($event)" placeholder="password" class="form-control" />
+        <input type="password" v-model="password" placeholder="password" class="form-control" />
       </div>
     </div>
     <div class="form__buttons">
@@ -33,14 +33,6 @@ export default {
   },
 
   methods: {
-    setEmail(event) {
-      this.email = event.target.value
-    },
-
-    setPassword(event) {
-      this.password = event.target.value
-    },
-
     doLogin() {
       if (this.email === '' || this.email == null) {
         alert('Требуется ввести Email');
