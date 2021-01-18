@@ -3,14 +3,12 @@
     <the-header/>
 
     <main class="main">
-      <div class="container">
-
+      <div class="page page_onboarding">
+        <router-view/>
       </div>
     </main>
-
     <the-footer/>
   </div>
-
 </template>
 
 <script>

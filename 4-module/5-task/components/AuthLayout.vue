@@ -1,13 +1,8 @@
 <template>
-  <main class="main">
-    <div class="page page_onboarding">
       <div class="container">
         <h1 class="page__title text-center">{{title}}</h1>
-        AuthLayout
+        <slot/>
       </div>
-    </div>
-  </main>
-
 </template>
 
 <script>

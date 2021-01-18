@@ -2,9 +2,9 @@
   <header class="header">
     <div>
       <h1>
-        <a href="/" class="router-link-exact-active router-link-active"
+        <router-link :to="{ name: 'meetups' }" class="router-link-exact-active router-link-active"
         ><img src=/assets/logo.svg alt="Meetups"
-        /></a>
+        /></router-link>
       </h1>
     </div>
     <nav>
