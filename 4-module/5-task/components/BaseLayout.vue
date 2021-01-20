@@ -3,7 +3,7 @@
     <the-header/>
 
     <main class="main">
-      <div class="page page_onboarding">
+      <div class="page">
         <slot/>
       </div>
     </main>
