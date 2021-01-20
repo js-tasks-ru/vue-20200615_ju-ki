@@ -1,9 +1,7 @@
 <template>
   <div class="page page_meetup-forms">
     <h1 class="page__title text-center">{{title}}</h1>
-    <form class="form">
       <slot></slot>
-    </form>
   </div>
 </template>
 

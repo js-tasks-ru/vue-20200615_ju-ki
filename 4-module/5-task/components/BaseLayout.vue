@@ -1,9 +1,8 @@
 <template>
   <div class="wrapper bg-grey">
     <the-header/>
-
     <main class="main">
-      <div class="page">
+      <div class="container">
         <slot/>
       </div>
     </main>
