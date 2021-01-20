@@ -1,8 +1,10 @@
 <template>
-  <div class="page page_meetup-forms">
-    <h1 class="page__title text-center">{{title}}</h1>
-      <slot></slot>
-  </div>
+    <div class="page page_meetup-forms">
+      <div class="container">
+        <h1 class="page__title text-center">{{title}}</h1>
+        <slot></slot>
+      </div>
+    </div>
 </template>
 
 <script>

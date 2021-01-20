@@ -1,9 +1,9 @@
 <template>
   <div class="page page_onboarding">
-
-    <h1 class="page__title text-center">{{title}}</h1>
-    <slot/>
-
+    <div class="container">
+      <h1 class="page__title text-center">{{title}}</h1>
+      <slot/>
+    </div>
   </div>
 
 </template>

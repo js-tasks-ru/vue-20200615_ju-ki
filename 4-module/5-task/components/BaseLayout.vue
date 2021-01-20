@@ -2,9 +2,7 @@
   <div class="wrapper bg-grey">
     <the-header/>
     <main class="main">
-      <div class="container">
         <slot/>
-      </div>
     </main>
     <the-footer/>
   </div>
