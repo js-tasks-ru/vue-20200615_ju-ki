@@ -1,10 +1,49 @@
 <template>
-  <button class="button">content</button>
+
+    <component
+      class="button"
+      :class="{
+            'button_block': block
+            }"
+      v-bind="$attrs"
+      v-on="$listeners"
+      :is="tag">
+      <slot/>
+    </component>
+
+
 </template>
 
 <script>
+
 export default {
   name: 'BaseButton',
+  inheritAttrs: false,
+  props: {
+    block: Boolean,
+    tag: {
+      type: String,
+      default: 'button',
+      validator: function (value) {
+        return ['a', 'button', 'router-link'].includes(value)
+      }
+    }
+  },
+
+  data() {
+    return {
+    }
+  },
+
+  computed: {
+    computeComponent() {
+      if (this.tag === 'a') {
+        return '<a>'
+      } else {
+        return '<button>'
+      }
+    }
+  }
 };
 </script>
 
