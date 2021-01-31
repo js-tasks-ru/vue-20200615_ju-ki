@@ -1,18 +1,15 @@
 <template>
   <div class="input-group"
        :class="{
-          'input-group_icon': hasRightIconSlot,
-          'input-group_icon': hasLeftIconSlot,
+          'input-group_icon': hasRightIconSlot || hasLeftIconSlot,
           'input-group_icon-left': hasLeftIconSlot,
           'input-group_icon-right': hasRightIconSlot
         }"
   >
 
     <slot name="left-icon" />
-    <slot name="right-icon" />
 
-    <div v-if="multiline">
-      <textarea
+      <textarea v-if="multiline"
         class="form-control"
         :class="{
           'form-control_sm': small,
@@ -21,7 +18,6 @@
         :value="value"
         v-bind="$attrs"
         v-on="listeners" />
-    </div>
 
     <div v-else>
       <input
@@ -34,6 +30,8 @@
         v-bind="$attrs"
         v-on="listeners" />
     </div>
+
+    <slot name="right-icon" />
 
   </div>
 </template>
@@ -58,12 +56,12 @@ export default {
   },
 
   mounted() {
-    this.hasLeftIconSlot = !!(this.$scopedSlots['left-icon'] ? this.$scopedSlots['left-icon']() : null);
-    this.hasLeftIconSlot = !!(this.$scopedSlots['right-icon'] ? this.$scopedSlots['right-icon']() : null)
+    this.hasLeftIconSlot = this.$scopedSlots['left-icon'] ? !!this.$scopedSlots['left-icon']() : false;
+    this.hasRightIconSlot = this.$scopedSlots['right-icon'] ? !!this.$scopedSlots['right-icon']() : false;
   },
   updated() {
-    this.hasLeftIconSlot = !!(this.$scopedSlots['left-icon'] ? this.$scopedSlots['left-icon']() : null);
-    this.hasLeftIconSlot = !!(this.$scopedSlots['right-icon'] ? this.$scopedSlots['right-icon']() : null)
+    this.hasLeftIconSlot = this.$scopedSlots['left-icon'] ? !!this.$scopedSlots['left-icon']() : false;
+    this.hasRightIconSlot = this.$scopedSlots['right-icon'] ? !!this.$scopedSlots['right-icon']() : false;
   },
 
   model: {
