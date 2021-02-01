@@ -9,27 +9,16 @@
 
     <slot name="left-icon" />
 
-      <textarea v-if="multiline"
-        class="form-control"
-        :class="{
-          'form-control_sm': small,
-          'form-control_rounded': rounded
-        }"
-        :value="value"
-        v-bind="$attrs"
-        v-on="listeners" />
-
-    <div v-else>
-      <input
-        class="form-control"
-        :class="{
-          'form-control_sm': small,
-          'form-control_rounded': rounded
-        }"
-        :value="value"
-        v-bind="$attrs"
-        v-on="listeners" />
-    </div>
+    <component :is="multiline ? `textarea` : `input`"
+               class="form-control"
+               :class="{
+                'form-control_sm': small,
+                'form-control_rounded': rounded
+              }"
+               :value.prop="value"
+               v-bind="$attrs"
+               v-on="listeners"
+    />
 
     <slot name="right-icon" />
 
@@ -37,6 +26,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'AppInput',
   inheritAttrs: false,
