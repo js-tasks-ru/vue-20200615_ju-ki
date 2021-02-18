@@ -18,7 +18,6 @@
 
 export default {
   name: 'BaseButton',
-  inheritAttrs: false,
   props: {
     block: Boolean,
     tag: {
@@ -26,21 +25,6 @@ export default {
       default: 'button',
       validator: function (value) {
         return ['a', 'button', 'router-link'].includes(value)
-      }
-    }
-  },
-
-  data() {
-    return {
-    }
-  },
-
-  computed: {
-    computeComponent() {
-      if (this.tag === 'a') {
-        return '<a>'
-      } else {
-        return '<button>'
       }
     }
   }
