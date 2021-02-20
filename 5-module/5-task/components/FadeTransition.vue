@@ -1,26 +1,17 @@
 <template>
-  <transition name="fade" mode="out-in">
-    <slot v-bind="$attrs"
-          v-on="listeners"></slot>
+  <transition name="fade" mode="out-in" v-bind="$attrs" v-on="$listeners">
+    <slot></slot>
   </transition>
 </template>
 
 <script>
 export default {
   name: 'FadeTransition',
-  inheritAttrs: false,
-
-  computed: {
-    listeners() {
-      return {
-        ...this.$listeners()
-      }
-    }
-  }
+  inheritAttrs: false
 };
 </script>
 
-<style>
+<style scoped>
 
   .fade-enter-active,
   .fade-leave-active {
