@@ -58,7 +58,6 @@
 <script>
 import MeetupAgendaItemForm from './MeetupAgendaItemForm.vue';
 import ImageUploader from './ImageUploader';
-import deepClone from '../lodash.clonedeep.min';
 
 function buildAgendaItem() {
   return {
