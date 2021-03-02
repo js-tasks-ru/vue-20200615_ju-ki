@@ -27,7 +27,7 @@ export default {
         title: '',
         description: '',
         imageId: null,
-        date: new Date(),
+        date: '2021-02-03',
         place: '',
         agenda: [],
       },
