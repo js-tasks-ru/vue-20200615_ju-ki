@@ -120,7 +120,10 @@ export default {
 
     addAgendaItem() {
       const newAgendaItem = buildAgendaItem();
-      this.meetup_.agenda.push(newAgendaItem)
+      if (this.meetup_.agenda.length > 0) {
+        newAgendaItem['startsAt'] = this.meetup_.agenda[this.meetup_.agenda.length - 1].endsAt;
+      }
+      this.meetup_.agenda.push(newAgendaItem);
     },
 
     removeAgendaItem(idx) {
