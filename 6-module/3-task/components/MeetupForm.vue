@@ -25,17 +25,17 @@
       </fieldset>
 
       <h3 class="form__section-title">Программа</h3>
-       <meetup-agenda-item-form class="mb-3"
-          v-for="(agendaItem, idx) in meetup_.agenda"
-          :agenda-item="agendaItem"
-          :key="agendaItem.id"
-          @remove="removeAgendaItem(idx)"
-          @update:agendaItem="updateAgendaItem(idx, $event)"
-       />
+      <meetup-agenda-item-form class="mb-3"
+         v-for="(agendaItem, idx) in meetup_.agenda"
+         :agenda-item="agendaItem"
+         :key="agendaItem.id"
+         @remove="removeAgendaItem(idx)"
+         @update:agendaItem="updateAgendaItem(idx, $event)"
+      />
 
       <div class="form-section_append">
         <button type="button"
-        @click="addAgendaItem"
+                @click="addAgendaItem"
         >
           + Добавить этап программы
         </button>
@@ -65,6 +65,7 @@
 <script>
 import MeetupAgendaItemForm from './MeetupAgendaItemForm.vue';
 import ImageUploader from './ImageUploader';
+import deepClone from '../lodash.clonedeep.min';
 
 function buildAgendaItem() {
   return {
@@ -100,17 +101,6 @@ export default {
       meetup_: deepClone(this.meetup)
     }
   },
-
-  // computed: {
-  //   meetup_() {
-  //     return deepClone(this.meetup)
-  //   },
-  //   processedMeetup() {
-  //     return Object.assign({}, this.meetup_, {
-  //       date: new Date(this.meetup_.date).toLocaleString('af-ZA')
-  //     });
-  //   },
-  // },
 
   methods: {
     onSubmit() {
