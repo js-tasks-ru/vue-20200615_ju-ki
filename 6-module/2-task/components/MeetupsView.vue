@@ -64,14 +64,40 @@ export default {
     AppEmpty,
   },
 
+  props: {
+    meetups: Array,
+    options: {
+      type: Object
+    }
+  },
+
+  watch: {
+    options: {
+      view: {
+        handler(newValue) {
+          this.$emit('update:view', newValue)
+        }
+      },
+      date: {
+        handler(newValue) {
+          this.$emit('update:date', newValue)
+        }
+      },
+      participation: {
+        handler(newValue) {
+          this.$emit('update:participation', newValue)
+        }
+      },
+      search: {
+        handler(newValue) {
+          this.$emit('update:search', newValue)
+        }
+      },
+    }
+  },
+
   data() {
     return {
-      options: {
-        date: 'all',
-        participation: 'all',
-        search: '',
-        view: 'list',
-      },
       dateFilterOptions: [
         { text: 'Все', value: 'all' },
         { text: 'Прошедшие', value: 'past' },
