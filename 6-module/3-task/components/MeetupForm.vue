@@ -36,6 +36,7 @@
       <div class="form-section_append">
         <button type="button"
                 @click="addAgendaItem"
+                data-test="addAgendaItem"
         >
           + Добавить этап программы
         </button>
@@ -48,12 +49,14 @@
           class="button button_secondary button_block"
           type="button"
           ref="cancelButton"
+          data-test="cancel"
           @click="$emit('cancel', 'cancel')"
         >
           Отмена
         </button>
         <button
           class="button button_primary button_block"
+          data-test="submit"
           type="submit">
           {{ submitText }}
         </button>
