@@ -50,10 +50,7 @@
       <div class="form-group">
         <label class="form-label">Язык</label>
         <!--      @change="$emit('update:agendaItem' не обязательно, можно использовать  v-model-->
-        <select class="form-control" @change="$emit('update:agendaItem', {
-            ...agendaItem_,
-            language: $event.target.value
-          })">
+        <select class="form-control" v-model="agendaItem_.language">
           <option
             v-for="lang in agendaTalkLanguages"
             :value="lang.value"
