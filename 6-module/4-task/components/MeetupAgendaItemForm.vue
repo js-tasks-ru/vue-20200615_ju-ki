@@ -8,7 +8,7 @@
       <select class="form-control" title="Тип" v-model="agendaItem_.type" >
         <option
         v-for="type in agendaItemTypes"
-        :key="type.id"
+        :key="type.value"
         :value="type.value">
           {{ type.text }}
         </option>
@@ -87,14 +87,14 @@
 
 <script>
 const getAgendaItemTypes = () => [
-  { value: 'registration', text: 'Регистрация', id: Math.random() },
-  { value: 'opening', text: 'Открытие', id: Math.random() },
-  { value: 'break', text: 'Перерыв', id: Math.random() },
-  { value: 'coffee', text: 'Coffee Break', id: Math.random() },
-  { value: 'closing', text: 'Закрытие', id: Math.random() },
-  { value: 'afterparty', text: 'Afterparty', id: Math.random() },
-  { value: 'talk', text: 'Доклад', id: Math.random() },
-  { value: 'other', text: 'Другое', id: Math.random() },
+  { value: 'registration', text: 'Регистрация'},
+  { value: 'opening', text: 'Открытие'},
+  { value: 'break', text: 'Перерыв'},
+  { value: 'coffee', text: 'Coffee Break'},
+  { value: 'closing', text: 'Закрытие' },
+  { value: 'afterparty', text: 'Afterparty'},
+  { value: 'talk', text: 'Доклад'},
+  { value: 'other', text: 'Другое'},
 ];
 
 const getTalkLanguages = () => [
