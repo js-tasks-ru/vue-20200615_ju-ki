@@ -4,7 +4,7 @@
       <div class="filters-panel__col">
         <form-check
           :options="dateFilterOptions"
-          v-model="options.date"
+          v-model="options_.date"
         ></form-check>
       </div>
 
@@ -16,12 +16,12 @@
               class="form-control form-control_rounded form-control_sm"
               type="text"
               placeholder="Поиск"
-              v-model="options.search"
+              v-model="options_.search"
             />
           </div>
         </div>
         <div class="form-group form-group_inline">
-          <page-tabs :selected.sync="options.view"></page-tabs>
+          <page-tabs :selected.sync="options_.view"></page-tabs>
         </div>
       </div>
     </div>
@@ -32,12 +32,12 @@
       mode="out-in"
     >
       <meetups-list
-        v-if="options.view === '' || options.view === 'list'"
+        v-if="options_.view === '' || options_.view === 'list'"
         :meetups="filteredMeetups"
         key="list"
       ></meetups-list>
       <meetups-calendar
-        v-else-if="options.view === 'calendar'"
+        v-else-if="options_.view === 'calendar'"
         :meetups="filteredMeetups"
         key="calendar"
       ></meetups-calendar>
@@ -64,19 +64,41 @@ export default {
     AppEmpty,
   },
 
+  props: {
+    meetups: Array,
+    options: {
+      type: Object
+    }
+  },
+
+  watch: {
+    options_: {
+      deep: true,
+      handler(newValue) {
+        this.$emit('update:options', newValue)
+      }
+    },
+
+    // если входной параметр будет обновлён (родитель отправит новое значение), компонент об этом не узнает (ничего не произойдёт)
+    // Требуется локальное состояние получать не только на момент инициализации в data, но всегда, когда обновляются options
+    options: {
+      deep: true,
+      handler(newValue) {
+        this.options_ = newValue
+      }
+    }
+  },
+
   data() {
     return {
-      options: {
-        date: 'all',
-        participation: 'all',
-        search: '',
-        view: 'list',
-      },
       dateFilterOptions: [
         { text: 'Все', value: 'all' },
         { text: 'Прошедшие', value: 'past' },
         { text: 'Ожидаемые', value: 'future' },
       ],
+      options_: {
+        ...this.options
+      }
     };
   },
 
@@ -84,29 +106,29 @@ export default {
     filteredMeetups() {
       let filteredMeetups = this.meetups;
 
-      if (this.options.date === 'past') {
+      if (this.options_.date === 'past') {
         filteredMeetups = filteredMeetups.filter(
           (meetup) => new Date(meetup.date) <= new Date(),
         );
-      } else if (this.options.date === 'future') {
+      } else if (this.options_.date === 'future') {
         filteredMeetups = filteredMeetups.filter(
           (meetup) => new Date(meetup.date) > new Date(),
         );
       }
 
-      if (this.options.participation === 'organizing') {
+      if (this.options_.participation === 'organizing') {
         filteredMeetups = filteredMeetups.filter((meetup) => meetup.organizing);
-      } else if (this.options.participation === 'attending') {
+      } else if (this.options_.participation === 'attending') {
         filteredMeetups = filteredMeetups.filter((meetup) => meetup.attending);
       }
 
-      if (this.options.search) {
+      if (this.options_.search) {
         const concatMeetupText = (meetup) =>
           [meetup.title, meetup.description, meetup.place, meetup.organizer]
             .join(' ')
             .toLowerCase();
         filteredMeetups = filteredMeetups.filter((meetup) =>
-          concatMeetupText(meetup).includes(this.options.search.toLowerCase()),
+          concatMeetupText(meetup).includes(this.options_.search.toLowerCase()),
         );
       }
 
