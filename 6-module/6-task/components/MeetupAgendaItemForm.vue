@@ -23,6 +23,9 @@
       </div>
     </div>
 
+<!--    в v-for итерация по одному типу из fieldSpecifications определенного выбранного типа из dropdown-->
+<!--    каждый тип из fieldSpecifications - массив, "комплект полей", принадлежащие этому типу (talk, other, ...).-->
+<!--    каждое поле - это описание конкретного компонента и его параметров-->
     <template v-for="specificationItem in $options.fieldSpecifications[agendaItem_.type]" >
       <div class="form-group" :key="specificationItem.title">
         <label class="form-label">{{specificationItem.title}}</label>
