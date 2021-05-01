@@ -5,6 +5,10 @@
     </button>
 
     <div class="form-group">
+<!--      На select v-model-->
+<!--      v-model это :prop="value" @event="value = $event"-->
+<!--      когда есть только change, то только обрабатывается выбор значения в селекте, и обновляются данные при выборе значения.-->
+<!--      Но при этом текущий выбранный элемент в селекте никак не связан с данными-->
       <select class="form-control" title="Тип" v-model="agendaItem_.type" >
         <option
         v-for="type in agendaItemTypes"
